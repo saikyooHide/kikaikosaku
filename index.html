@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランダム穴埋めテスト</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.8;
+            margin: 20px;
+        }
+        .blank {
+            border-bottom: 2px solid black;
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ランダム穴埋めテスト</h1>
+    <div id="questions"></div>
+    <script>
+        // 入力する文章（カッコにしたい部分をランダムに選びます）
+        const text = `これはテスト用のサンプル文章です。この文章の中からランダムに単語を選び、穴埋めを作成します。穴埋め形式のテストは、言葉の使い方や文法を確認するのに役立ちます。`;
+
+        // ランダムに単語を空白にする
+        function createBlanks(text) {
+            const words = text.split(' ');
+            const blankCount = Math.min(5, words.length); // 最大5つまで空白を作る
+            const blankIndices = new Set();
+
+            // 空白にする単語のインデックスを選ぶ
+            while (blankIndices.size < blankCount) {
+                blankIndices.add(Math.floor(Math.random() * words.length));
+            }
+
+            return words.map((word, index) => blankIndices.has(index) ? `<span class="blank">_____</span>` : word).join(' ');
+        }
+
+        // 質問を表示
+        document.getElementById('questions').innerHTML = `
+            <div class="question">${createBlanks(text)}</div>
+        `;
+    </script>
+</body>
+</html>
